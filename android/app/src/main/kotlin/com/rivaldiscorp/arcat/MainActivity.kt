@@ -1,4 +1,4 @@
-package com.rivaldiscorp.arcat
+package com.rivaldiscorp.bappeda.test
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
