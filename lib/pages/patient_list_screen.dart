@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:bappeda_app/shared/theme.dart';
 import 'package:bappeda_app/widgets/custom_app_bar.dart';
 import 'package:bappeda_app/widgets/custom_patient_list_item.dart';
+import 'package:http/http.dart' as http;
 
 class PatientListScreen extends StatefulWidget {
   const PatientListScreen({Key? key}) : super(key: key);
@@ -11,6 +14,19 @@ class PatientListScreen extends StatefulWidget {
 }
 
 class _PatientListScreenState extends State<PatientListScreen> {
+  var patientData;
+  Future<void> getPatientData() async {
+    final response = await http.get(
+        Uri.parse('https://ayo-wisuda.site/api/gedmi/siswa/indexsiswa/VII'));
+
+    if (response.statusCode == 200) {
+      patientData = jsonDecode(response.body.toString());
+      return patientData;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,27 +40,19 @@ class _PatientListScreenState extends State<PatientListScreen> {
           future: getPatientData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data!.isEmpty) {
-                return Center(
-                  child: Text(
-                    'Data masih kosong',
-                    style:
-                        blackTextStyle.copyWith(fontSize: 20, fontWeight: bold),
-                  ),
-                );
-              }
               return ListView.builder(
-                itemCount: snapshot.data!.length,
+                itemCount: patientData.length,
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 itemBuilder: (context, index) {
-                  final cat = snapshot.data![index];
-                  return CustomCatTypeListItem(
-                    image: 'assets/markers/${index + 1}.jpg',
-                    name: cat.name,
-                    type: cat.type,
+                  final patients = snapshot.data as List;
+                  return CustomPatientListItem(
+                    image: 'assets/images/ali.jpg',
+                    name: patients[index]['nama'],
+                    type: patients[index]['nama'],
                     action: () {
-                      Navigator.pushNamed(context, '/cat-detail',
-                          arguments: {'catID': cat.id});
+                      Navigator.pushNamed(context, '/cat-detail', arguments: {
+                        'name': patients[index]['nama'],
+                      });
                     },
                   );
                 },
