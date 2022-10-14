@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:bappeda_app/shared/theme.dart';
 
 class CustomPatientListItem extends StatelessWidget {
-  final String? image, name, type;
+  final String? image, name, nik, gender;
   final Function()? action;
 
   const CustomPatientListItem({
     Key? key,
     this.image,
     this.name,
-    this.type,
+    this.gender,
+    this.nik,
     this.action,
   }) : super(key: key);
 
@@ -19,7 +20,7 @@ class CustomPatientListItem extends StatelessWidget {
       onTap: action,
       child: Container(
         margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 11),
         height: 105,
         decoration: BoxDecoration(
           color: kWhiteColor,
@@ -30,24 +31,10 @@ class CustomPatientListItem extends StatelessWidget {
               offset: const Offset(0, 0),
             ),
           ],
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
           children: [
-            Container(
-              width: 75,
-              height: 75,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    image ?? 'assets/images/cat_test.jpeg',
-                  ),
-                  fit: BoxFit.contain,
-                ),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            ),
-            const SizedBox(width: 15),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -62,22 +49,57 @@ class CustomPatientListItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.only(right: 25.0),
-                    child: Text(
-                      type ?? 'Tidak ada type',
-                      style: blackTextStyle.copyWith(
-                        fontSize: 15,
-                        height: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      maxLines: 3,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            nik ?? '128718271872817',
+                            style: secondaryBlackTextStyle.copyWith(
+                              fontSize: 13,
+                              height: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Icon(
+                          Icons.circle,
+                          size: 8,
+                          color: kSecondaryBlackColor,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            gender ?? 'Perempuan',
+                            style: secondaryBlackTextStyle.copyWith(
+                              fontSize: 13,
+                              height: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(width: 15),
+            Container(
+              width: 65,
+              height: 65,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    image ?? 'assets/images/cat_test.jpeg',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
           ],
         ),
       ),

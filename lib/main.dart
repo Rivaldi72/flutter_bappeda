@@ -1,4 +1,3 @@
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:bappeda_app/pages/about_screen.dart';
 import 'package:bappeda_app/pages/patient_detail_screen.dart';

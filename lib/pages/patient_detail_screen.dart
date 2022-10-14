@@ -1,7 +1,10 @@
 import 'dart:ui';
+import 'package:bappeda_app/widgets/custom_patient_list_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bappeda_app/shared/theme.dart';
 import 'package:bappeda_app/widgets/custom_app_bar.dart';
+import 'package:flutter/widgets.dart';
 
 class PatientDetailScreen extends StatelessWidget {
   const PatientDetailScreen({Key? key}) : super(key: key);
@@ -12,89 +15,119 @@ class PatientDetailScreen extends StatelessWidget {
         <String, dynamic>{}) as Map;
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, kToolbarHeight),
-        child: CustomAppBar(
-          title: 'Detail Kucing',
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          left: 20,
-          top: 20,
-          right: 20,
-          bottom: 100,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-              ),
-              child: Column(
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 175,
+            padding: const EdgeInsets.only(top: 65),
+            decoration: BoxDecoration(
+              color: kPrimaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: kBlackColor.withOpacity(0.2),
+                  blurRadius: 30,
+                  offset: const Offset(0, 0),
+                ),
+              ],
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Detail Pasien',
+                      style: whiteTextStyle.copyWith(
+                        fontSize: 20,
+                        fontWeight: extraBold,
+                        letterSpacing: 3,
+                      ),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 18),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: kWhiteColor,
+                      size: 29,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 100),
+              child: ListView(
+                padding: const EdgeInsets.only(top: 23),
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    width: double.infinity,
-                    height: 290,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          'assets/images/ali.jpg',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ClipRRect(
-                        // make sure we apply clip it properly
-                        borderRadius: BorderRadius.circular(18),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: double.infinity,
-                            child: Text(
-                              'Test',
-                              textAlign: TextAlign.center,
-                              style: whiteTextStyle.copyWith(
-                                fontSize: 25,
-                                fontWeight: bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Test',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 15,
-                      fontWeight: semiBold,
-                      height: 1.2,
-                    ),
-                    textAlign: TextAlign.justify,
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Test',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 15,
-                      height: 1.2,
-                    ),
-                    textAlign: TextAlign.justify,
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
+                  ),
+                  CustomPatientListItem(
+                    image: 'assets/images/${arguments['image']}.png',
+                    name: arguments['name'],
+                    action: () {},
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }

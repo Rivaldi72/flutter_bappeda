@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:bappeda_app/shared/theme.dart';
@@ -33,7 +34,7 @@ class _PatientListScreenState extends State<PatientListScreen> {
         appBar: const PreferredSize(
           preferredSize: Size(double.infinity, kToolbarHeight),
           child: CustomAppBar(
-            title: 'Jenis-Jenis Kucing',
+            title: 'Daftar Pasien Hari Ini',
           ),
         ),
         body: FutureBuilder(
@@ -44,15 +45,22 @@ class _PatientListScreenState extends State<PatientListScreen> {
                 itemCount: patientData.length,
                 padding: const EdgeInsets.only(top: 20, bottom: 20),
                 itemBuilder: (context, index) {
+                  getRandomNumber() {
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(7);
+                    return randomNumber;
+                  }
+
                   final patients = snapshot.data as List;
                   return CustomPatientListItem(
-                    image: 'assets/images/ali.jpg',
+                    image: 'assets/images/${getRandomNumber()}.png',
                     name: patients[index]['nama'],
-                    type: patients[index]['nama'],
                     action: () {
-                      Navigator.pushNamed(context, '/cat-detail', arguments: {
-                        'name': patients[index]['nama'],
-                      });
+                      Navigator.pushNamed(context, '/patient-detail',
+                          arguments: {
+                            'name': patients[index]['nama'],
+                            'image': getRandomNumber(),
+                          });
                     },
                   );
                 },

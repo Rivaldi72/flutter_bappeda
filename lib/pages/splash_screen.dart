@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 3),
       () {
-        Navigator.pushNamed(context, '/home-screen');
+        Navigator.pushNamed(context, '/patient-list');
       },
     );
     super.initState();
@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/images/icon_scan.png',
+                    'assets/images/stethoscope.png',
                   ),
                 ),
               ),

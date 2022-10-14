@@ -13,16 +13,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        icon: leadingIcon ??
-            Image.asset(
-              'assets/images/icon_back.png',
-              height: 25,
-            ),
-      ),
+      leading: Container(),
       title: Text(
         title,
         style: whiteTextStyle.copyWith(
@@ -30,7 +21,7 @@ class CustomAppBar extends StatelessWidget {
           fontWeight: bold,
         ),
       ),
-      centerTitle: false,
+      centerTitle: true,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
