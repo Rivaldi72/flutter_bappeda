@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bappeda_app/shared/theme.dart';
 
 class CustomPatientListItem extends StatelessWidget {
-  final String? image, name, nik, gender;
+  final String? image, name, poli, gender;
   final Function()? action;
 
   const CustomPatientListItem({
@@ -10,7 +10,7 @@ class CustomPatientListItem extends StatelessWidget {
     this.image,
     this.name,
     this.gender,
-    this.nik,
+    this.poli,
     this.action,
   }) : super(key: key);
 
@@ -56,7 +56,7 @@ class CustomPatientListItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            nik ?? '128718271872817',
+                            poli ?? 'Poli Umum',
                             style: secondaryBlackTextStyle.copyWith(
                               fontSize: 13,
                               height: 1,

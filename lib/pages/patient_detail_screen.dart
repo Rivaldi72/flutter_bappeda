@@ -14,6 +14,8 @@ class PatientDetailScreen extends StatelessWidget {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
 
+    print(arguments['medicalRecord']);
+    // print(arguments);
     return Scaffold(
       body: Stack(
         children: [
@@ -61,72 +63,179 @@ class PatientDetailScreen extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 100),
-              child: ListView(
-                padding: const EdgeInsets.only(top: 23),
-                children: [
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: ListView(
+              physics: ClampingScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 23, bottom: 100),
+              children: [
+                CustomPatientListItem(
+                  image: 'assets/images/${arguments['image']}.png',
+                  name: arguments['name'],
+                  gender: arguments['gender'],
+                  action: () {},
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomCardTile(
+                              title: 'Nomer Antrian',
+                              value: arguments['noAntrian'].toString()),
+                          CustomCardTile(
+                              title: 'Umur (Tahun)',
+                              value: arguments['umur'].toString()),
+                          CustomCardTile(
+                              title: 'Riwayat (Kali)',
+                              value: arguments['history'].toString()),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Keluhan',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: bold,
+                        ),
+                      ),
+                      Text(
+                        '- ${arguments['medicalIssue']}',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Riwayat Penyakit',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: bold,
+                        ),
+                      ),
+                      ListView.builder(
+                        padding: const EdgeInsets.all(0),
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: arguments['medicalRecords'].length,
+                        itemBuilder: (context, index) {
+                          final medicineLists = arguments['medicalRecords']
+                              [index]['medicine_lists'];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '- ${arguments['medicalRecords'][index]['medical_issue']} (${arguments['medicalRecords'][index]['user']['name']})',
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(
+                                '   Riwayat Obat',
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              ListView.builder(
+                                padding: const EdgeInsets.all(0),
+                                physics: ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: medicineLists.length != 0
+                                    ? medicineLists.length
+                                    : 1,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      medicineLists.length != 0
+                                          ? Text(
+                                              '   - ${medicineLists[index]['stock']['name']} (${medicineLists[index]['quantity']} tablet)',
+                                              style: blackTextStyle.copyWith(
+                                                fontSize: 20,
+                                              ),
+                                            )
+                                          : Text(
+                                              '   - Tidak ada pemberian obat -',
+                                              style: blackTextStyle.copyWith(
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                  CustomPatientListItem(
-                    image: 'assets/images/${arguments['image']}.png',
-                    name: arguments['name'],
-                    action: () {},
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomCardTile extends StatelessWidget {
+  final String title, value;
+  const CustomCardTile({
+    Key? key,
+    required this.title,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 100,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: kGrayColor,
+        boxShadow: [
+          BoxShadow(
+            color: kWhiteColor.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 0),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: blueTextStyle.copyWith(
+              fontSize: 10,
+              fontWeight: bold,
+              letterSpacing: 2,
+            ),
+          ),
+          Spacer(),
+          Text(
+            value,
+            textAlign: TextAlign.center,
+            style: blackTextStyle.copyWith(
+              fontSize: 30,
+              fontWeight: bold,
+              letterSpacing: 2,
+            ),
+          )
         ],
       ),
     );

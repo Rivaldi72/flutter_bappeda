@@ -17,8 +17,8 @@ class PatientListScreen extends StatefulWidget {
 class _PatientListScreenState extends State<PatientListScreen> {
   var patientData;
   Future<void> getPatientData() async {
-    final response = await http.get(
-        Uri.parse('https://ayo-wisuda.site/api/gedmi/siswa/indexsiswa/VII'));
+    final response = await http
+        .get(Uri.parse('https://klinik.bappeda.ayo-wisuda.site/api/queue'));
 
     if (response.statusCode == 200) {
       patientData = jsonDecode(response.body.toString());
@@ -52,14 +52,33 @@ class _PatientListScreenState extends State<PatientListScreen> {
                   }
 
                   final patients = snapshot.data as List;
+                  final image = getRandomNumber();
                   return CustomPatientListItem(
-                    image: 'assets/images/${getRandomNumber()}.png',
-                    name: patients[index]['nama'],
+                    image: 'assets/images/$image.png',
+                    name: patients[index]['patient']['name'],
+                    gender: patients[index]['patient']['gender'] == 'male'
+                        ? 'Laki-Laki'
+                        : 'Perempuan',
+                    poli: patients[index]['poliklinik']['name'],
                     action: () {
                       Navigator.pushNamed(context, '/patient-detail',
                           arguments: {
-                            'name': patients[index]['nama'],
-                            'image': getRandomNumber(),
+                            'name': patients[index]['patient']['name'],
+                            'poli': patients[index]['poliklinik']['name'],
+                            'noAntrian': patients[index]['queue_no'],
+                            'nik': patients[index]['patient']['nik'],
+                            'umur': patients[index]['patient']['age'],
+                            'history': patients[index]['patient']
+                                    ['medical_records']
+                                .length,
+                            'medicalIssue': patients[index]['medical_issue'],
+                            'medicalRecords': patients[index]['patient']
+                                ['medical_records'],
+                            'image': image,
+                            'gender':
+                                patients[index]['patient']['gender'] == 'male'
+                                    ? 'Laki-Laki'
+                                    : 'Perempuan',
                           });
                     },
                   );
