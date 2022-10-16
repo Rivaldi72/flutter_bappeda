@@ -14,8 +14,6 @@ class PatientDetailScreen extends StatelessWidget {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
 
-    print(arguments['medicalRecord']);
-    // print(arguments);
     return Scaffold(
       body: Stack(
         children: [
@@ -123,19 +121,31 @@ class PatientDetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(0),
                         physics: ClampingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: arguments['medicalRecords'].length,
+                        itemCount: arguments['medicalRecords'].length != 0
+                            ? arguments['medicalRecords'].length
+                            : 1,
                         itemBuilder: (context, index) {
-                          final medicineLists = arguments['medicalRecords']
-                              [index]['medicine_lists'];
+                          final medicineLists =
+                              arguments['medicalRecords'].length != 0
+                                  ? arguments['medicalRecords'][index]
+                                      ['medicine_lists']
+                                  : '';
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '- ${arguments['medicalRecords'][index]['medical_issue']} (${arguments['medicalRecords'][index]['user']['name']})',
-                                style: blackTextStyle.copyWith(
-                                  fontSize: 20,
-                                ),
-                              ),
+                              arguments['medicalRecords'].length != 0
+                                  ? Text(
+                                      '- ${arguments['medicalRecords'][index]['medical_issue']} (${arguments['medicalRecords'][index]['user']['name']})',
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 20,
+                                      ),
+                                    )
+                                  : Text(
+                                      '   - Tidak ada riwayat penyakit -',
+                                      style: blackTextStyle.copyWith(
+                                        fontSize: 20,
+                                      ),
+                                    ),
                               Text(
                                 '   Riwayat Obat',
                                 style: blackTextStyle.copyWith(
