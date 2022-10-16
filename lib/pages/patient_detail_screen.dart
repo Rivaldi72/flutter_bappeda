@@ -72,6 +72,7 @@ class PatientDetailScreen extends StatelessWidget {
                   image: 'assets/images/${arguments['image']}.png',
                   name: arguments['name'],
                   gender: arguments['gender'],
+                  poli: arguments['poli'],
                   action: () {},
                 ),
                 const SizedBox(height: 20),

@@ -56,7 +56,7 @@ class CustomPatientListItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            poli ?? 'Poli Umum',
+                            gender ?? 'Perempuan',
                             style: secondaryBlackTextStyle.copyWith(
                               fontSize: 13,
                               height: 1,
@@ -72,7 +72,7 @@ class CustomPatientListItem extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            gender ?? 'Perempuan',
+                            poli ?? 'Poli Umum',
                             style: secondaryBlackTextStyle.copyWith(
                               fontSize: 13,
                               height: 1,
